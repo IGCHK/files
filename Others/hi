@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Message</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+        p {
+            font-size: 1.2em;
+            margin: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <p>Hi, hope you will enjoy your stay in 402A. You might be the luckiest person out of the whole level as this room is the biggest, but at the same time, hottest. Good luck on your exams!</p>
+</body>
+</html>
