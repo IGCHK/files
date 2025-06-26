@@ -16,6 +16,19 @@
         }
         button {
             margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px;
         }
     </style>
 </head>
@@ -23,7 +36,10 @@
     <h1>IGC HK Web File View Page</h1>
     <p>Paste your filename & directory below:</p>
     <textarea id="filename" placeholder="Paste filename here..."></textarea>
-    <button onclick="openUrl()">Submit</button>
+    <div class="button-container">
+        <button onclick="openUrl()">Submit</button>
+        <button onclick="window.open('https://web.igchkshop.dpdns.org/igchk', '_blank')">Go to IGC HK Main Page</button>
+    </div>
 
     <script>
         function openUrl() {
