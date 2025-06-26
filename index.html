@@ -3,10 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <meta http-equiv="refresh" content="0; url=https://viewfile.pages.dev/">
+    <title>IGC HK Web File View Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <p>If you are not redirected automatically, follow this <a href="https://viewfile.pages.dev/">link</a>.</p>
+    <h1>Auto Prepend URL</h1>
+    <p>Paste your filename below:</p>
+    <textarea id="filename" placeholder="Paste filename here..."></textarea>
+    <button onclick="openUrl()">Submit</button>
+
+    <script>
+        function openUrl() {
+            const url = "https://web.igchkshop.dpdns.org/";
+            const filename = document.getElementById("filename").value;
+            const fullUrl = url + filename;
+            window.open(fullUrl, '_blank');
+        }
+    </script>
 </body>
 </html>
