@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IGC HK File Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .file-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .file-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .file-preview {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background-color: #eee;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .file-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+            word-break: break-word;
+            width: 100%;
+        }
+        .url-container {
+            display: flex;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .url-input {
+            flex-grow: 1;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 12px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .copy-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        .copy-btn:hover {
+            background-color: #45a049;
+        }
+        .file-type {
+            color: #666;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .unsupported {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-style: italic;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h1>IGC HK Files</h1>
+    <div class="file-container" id="fileContainer">
+        <!-- Files will be added here by JavaScript -->
+    </div>
+
+    <script>
+        const urls = [
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20Edu.jpg",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20Banner.jpg",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20Department%20of%20International%20Affairs.jpeg",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20EDU%20Logo.png",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20EDU.png",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20EXAM%20copy.jpg",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20Edu%20Banner.jpg",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20Exam%20New%20Logo%202.png",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20Exam%20New%20Logo.jpg",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20Exam.jpg",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20Hotel.jpg",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20Music%20Banner.jpg",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20Music.jpg",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20Ordarance.pdf",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20Shop%20Banner.jpg",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20Shop%20Logo.jpg",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20Watermark.png",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20UK%20Shop.jpg",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC.jpg",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC.mp4",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/IGC.png",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/Ian%20Lam.jpg",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/Ian%20Pumpkin%20Head.png",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/New%20Logo/IGC%20HK%20New.png",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/New%20Logo/IGC%20HK%20Official.png",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/New%20Logo/IGC%20HK%20Pure.png",
+            "https://web.igchkshop.dpdns.org/IGC%20HK/New%20Logo/IGC%20HK%20Transparent.png"
+
+
+            <!-- Add new code here -->
+
+
+          
+        ];
+
+        const fileContainer = document.getElementById('fileContainer');
+        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        const videoExtensions = ['mp4', 'webm', 'ogg'];
+
+        urls.forEach(url => {
+            // Extract filename from URL
+            const filenameWithExt = decodeURIComponent(url.split('/').pop());
+            const lastDotIndex = filenameWithExt.lastIndexOf('.');
+            const filename = lastDotIndex !== -1 ? filenameWithExt.substring(0, lastDotIndex) : filenameWithExt;
+            const extension = lastDotIndex !== -1 ? filenameWithExt.substring(lastDotIndex + 1).toLowerCase() : '';
+            
+            // Create file card
+            const fileCard = document.createElement('div');
+            fileCard.className = 'file-card';
+            
+            // Create preview element based on file type
+            let previewElement;
+            if (imageExtensions.includes(extension)) {
+                previewElement = document.createElement('img');
+                previewElement.src = url;
+                previewElement.className = 'file-preview';
+                previewElement.alt = filename;
+            } else if (videoExtensions.includes(extension)) {
+                previewElement = document.createElement('video');
+                previewElement.src = url;
+                previewElement.className = 'file-preview';
+                previewElement.controls = true;
+            } else {
+                previewElement = document.createElement('div');
+                previewElement.className = 'file-preview unsupported';
+                previewElement.textContent = `Preview not available for .${extension} files`;
+            }
+            
+            // Create filename element
+            const fileNameElement = document.createElement('div');
+            fileNameElement.className = 'file-name';
+            fileNameElement.textContent = filename;
+            
+            // Create URL container with copy button
+            const urlContainer = document.createElement('div');
+            urlContainer.className = 'url-container';
+            
+            const urlInput = document.createElement('input');
+            urlInput.className = 'url-input';
+            urlInput.type = 'text';
+            urlInput.value = url;
+            urlInput.readOnly = true;
+            
+            const copyButton = document.createElement('button');
+            copyButton.className = 'copy-btn';
+            copyButton.textContent = 'Copy';
+            copyButton.addEventListener('click', () => {
+                urlInput.select();
+                document.execCommand('copy');
+                copyButton.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyButton.textContent = 'Copy';
+                }, 2000);
+            });
+            
+            urlContainer.appendChild(urlInput);
+            urlContainer.appendChild(copyButton);
+            
+            // Create file type indicator
+            const fileTypeElement = document.createElement('div');
+            fileTypeElement.className = 'file-type';
+            fileTypeElement.textContent = `.${extension}`;
+            
+            // Assemble the card
+            fileCard.appendChild(previewElement);
+            fileCard.appendChild(fileNameElement);
+            fileCard.appendChild(urlContainer);
+            fileCard.appendChild(fileTypeElement);
+            
+            // Add card to container
+            fileContainer.appendChild(fileCard);
+        });
+    </script>
+</body>
+</html>
